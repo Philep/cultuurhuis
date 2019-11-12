@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <link rel="icon" th:href="@{/images/cultuurhuis.ico}" type="image/x-icon">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" th:href="@{/css/cultuurhuis.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<nav th:fragment="menu">
+<!--        <a th:href="@{/}">Voorstellingen</a>-->
+
+        <a class="active" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Voorstellingen</a>
+        <a th:href="@{/}"><i class="fa fa-fw fa-shopping-basket"></i> Mandje</a>
+        <a th:href="@{/}"><i class="fa fa-fw fa-envelope"></i> Bevestigen</a>
+
+</nav>
+
+</body>
+</html>

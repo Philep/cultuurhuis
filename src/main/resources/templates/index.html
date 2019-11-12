@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title=#{cultuurhuis})"></head>
+<body>
+<div class="navbar">
+    <nav th:replace="fragments::menu"></nav>
+</div>
+
+<h1>Voorstellingen <img th:src="@{/images/voorstellingen.png}" alt="voorstellingen" /> </h1>
+
+<h2>Genres</h2>
+
+<ul class="naastMekaar">
+    <li th:each="genre:${genres}">
+        <a th:href="@{/voorstellingen/{genre}(genre=${genre.naam})}" th:text="${genre.naam}"></a>
+    </li>
+</ul>
+
+<h3 th:if="${naamGenre} != null" th:text="|${naamGenre} voorstellingen|"></h3>
+
+<table th:if="${voorstellingen} != null">
+    <thead>
+    <tr>
+        <th>Datum</a></th>
+        <th>Titel</a></th>
+        <th>Uitvoerders</a></th>
+        <th>Prijs</a></th>
+        <th>Vrije plaatsen</a></th>
+        <th>Reserveren</a></th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="voorstelling:${voorstellingen.content}" th:object="${voorstelling}">
+            <td th:text="*{datum}"></td>
+            <td th:text="*{titel}"></td>
+            <td th:text="*{uitvoerders}"></td>
+            <td th:text="*{prijs}"></td>
+            <td th:text="*{vrijeplaatsen}"></td>
+            <td><a th:if="*{vrijeplaatsen > 0}" th:href="@{/reserveer/{id}(id=*{id})}" th:text="Reserveren"></a></td>
+
+        </tr>
+    </tbody>
+</table>
+
+
+
+</body>
+</html>

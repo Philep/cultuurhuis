@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title=#{cultuurhuis})"></head>
+<body>
+<div class="navbar">
+    <nav th:replace="fragments::menu"></nav>
+</div>
+
+<h1 th:if="${voorstelling} == null">Pizza niet gevonden:
+    <span th:text="${voorstelling.id}"></span>
+</h1>
+
+<div th:if="${voorstelling} != null" th:object="${voorstelling}">
+
+    <h1><span th:text="|*{titel} - *{uitvoerders}|"> </span> <img th:src="@{/images/reserveren.png}" alt="reserveren" /> </h1>
+
+    <form method="post" th:action="@{/mandje}">
+
+        <dl>
+            <dt>Voorstelling</dt>
+            <dd th:text="*{titel}"></dd>
+            <dt>Uitvoerders</dt>
+            <dd th:text="*{uitvoerders}"></dd>
+            <dt>Datum</dt>
+            <dd th:text="*{datum}"></dd>
+            <dt>Prijs</dt>
+            <dd th:text="*{prijs}"></dd>
+            <dt>Vrije plaatsen</dt>
+            <dd th:text="*{vrijeplaatsen}"></dd>
+            <dt>Plaatsen</dt>
+            <dd><input th:field="${reservatieForm.aantalPlaatsen}" type="number" required min="0"></dd>
+        </dl>
+        <input th:field="${reservatieForm.id}" th:value="*{id}" type="hidden">
+        <input type="submit" value="Toevoegen">
+    </form>
+
+</div>
+
+
+
+
+
+<script th:src="@{/js/preventDoubleSubmit.js}"></script>
+
+
+</body>
+</html>

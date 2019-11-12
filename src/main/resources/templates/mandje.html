@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title=#{cultuurhuis})"></head>
+<body>
+<div class="navbar">
+    <nav th:replace="fragments::menu"></nav>
+</div>
+
+<h1>Mandje <img th:src="@{/images/mandje.png}" alt="mandje" /> </h1>
+
+<table th:if="${mandje}">
+    <thead>
+    <tr>
+        <th>Datum</a></th>
+        <th>Titel</a></th>
+        <th>Uitvoerders</a></th>
+        <th>Prijs</a></th>
+        <th>Plaatsen</a></th>
+        <th>Verwijderen</a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="reservering:${}" th:object="${voorstelling}">
+        <td th:text="*{datum}"></td>
+        <td th:text="*{titel}"></td>
+        <td th:text="*{uitvoerders}"></td>
+        <td th:text="*{prijs}"></td>
+        <td th:text="*{vrijeplaatsen}"></td>
+        <td><a th:if="*{vrijeplaatsen > 0}" th:href="@{/reserveer/{id}(id=*{id})}" th:text="Reserveren"></a></td>
+
+    </tr>
+    </tbody>
+</table>
+
+
+
+</body>
+</html>
