@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments::head(title=#{cultuurhuis})"></head>
+<head th:replace="fragments::head(title=#{mandje})"></head>
 <body>
 <div class="navbar">
     <nav th:replace="fragments::menu"></nav>
@@ -20,18 +20,18 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="reservering:${}" th:object="${voorstelling}">
+    <tr th:each="reservering:${reserveringenMandje}" th:object="${reservering}">
         <td th:text="*{datum}"></td>
         <td th:text="*{titel}"></td>
         <td th:text="*{uitvoerders}"></td>
         <td th:text="*{prijs}"></td>
-        <td th:text="*{vrijeplaatsen}"></td>
-        <td><a th:if="*{vrijeplaatsen > 0}" th:href="@{/reserveer/{id}(id=*{id})}" th:text="Reserveren"></a></td>
+        <td th:text="*{aantalPlaatsen}"></td>
 
     </tr>
     </tbody>
 </table>
 
+<h3 th:text="|Te betalen: € ${totalePrijs}|"></h3>
 
 
 </body>

@@ -1,6 +1,8 @@
 package be.vdab.cultuurhuis.controllers;
 
-import be.vdab.cultuurhuis.domain.Reservatie;
+import be.vdab.cultuurhuis.dto.ReservatieMandje;
+import be.vdab.cultuurhuis.domain.Voorstelling;
+import be.vdab.cultuurhuis.exceptions.VoorstellingNietGevondenException;
 import be.vdab.cultuurhuis.forms.ReservatieForm;
 import be.vdab.cultuurhuis.services.VoorstellingService;
 import be.vdab.cultuurhuis.sessions.Mandje;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,35 +23,68 @@ import java.util.Map;
 @RequestMapping("mandje")
 public class MandjeController {
 
-    private final VoorstellingService
+    private final VoorstellingService voorstellingService;
+
+    public MandjeController(VoorstellingService voorstellingService) {
+        this.voorstellingService = voorstellingService;
+    }
+
+    //vul tijdelijk mandje dat gebruiker ziet en nog niet bevestigd is
+    private List<ReservatieMandje> vulMandjeGebruiker(@Valid Mandje mandje) {
+        List<ReservatieMandje> reserveringenMandje = new ArrayList<>();
+
+        try {
+
+            Map<Long, Integer> map = mandje.getReserveringen();
+
+            for (Map.Entry<Long, Integer> entry : map.entrySet()) {
+                Voorstelling voorstelling = voorstellingService.findById(entry.getKey()).get();
+                reserveringenMandje.add(new ReservatieMandje(entry.getKey(), voorstelling.getDatum(), voorstelling.getTitel(), voorstelling.getUitvoerders(), voorstelling.getPrijs(), entry.getValue()));
+            }
+
+        } catch (VoorstellingNietGevondenException e) {
+            e.printStackTrace();
+        }
+
+        return reserveringenMandje;
+    }
+
+    //bereken tijdelijke kostprijs dat de gebruiker moet gaan betalen
+    private BigDecimal berekenTotalePrijsMandje(List<ReservatieMandje> reserveringenMandje) {
+
+        BigDecimal totalePrijsMandje = BigDecimal.ZERO;
+
+        for (ReservatieMandje res : reserveringenMandje) {
+            totalePrijsMandje = totalePrijsMandje.add(res.getPrijs().multiply(BigDecimal.valueOf(res.getAantalPlaatsen())));
+        }
+
+        return totalePrijsMandje;
+
+    }
 
     @GetMapping()
     public ModelAndView mandje(@Valid Mandje mandje) {
 
-        Map<Long, Integer> map = mandje.getReserveringen();
-        List<Reservatie> reserveringenMandje = new ArrayList<>();
-        map.forEach((key, value) -> reserveringenMandje.add());
+        ModelAndView modelAndView = new ModelAndView("mandje");
 
+        List<ReservatieMandje> reserveringenMandje = vulMandjeGebruiker(mandje);
+        BigDecimal totalePrijs = berekenTotalePrijsMandje(reserveringenMandje);
 
-
-
-
-        return new ModelAndView("mandje");
+        modelAndView.addObject("totalePrijs", totalePrijs);
+        return modelAndView.addObject("reserveringenMandje", reserveringenMandje);
     }
 
     @PostMapping
-    public ModelAndView toevoegen(@Valid ReservatieForm form, @Valid Mandje mandje, Errors errors) {
+    public String toevoegen(@Valid ReservatieForm form, @Valid Mandje mandje, Errors errors) {
 
-        ModelAndView modelAndView = new ModelAndView("mandje");
 
         if (errors.hasErrors()) {
-            return modelAndView;
+            return "redirect:/mandje";
         }
 
         mandje.voegToe(form.getId(), form.getAantalPlaatsen());
 
-        return modelAndView;
-
+        return "redirect:/mandje";
 
     }
 

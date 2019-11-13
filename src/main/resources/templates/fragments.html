@@ -8,11 +8,10 @@
 </head>
 <body>
 <nav th:fragment="menu">
-<!--        <a th:href="@{/}">Voorstellingen</a>-->
 
         <a class="active" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Voorstellingen</a>
-        <a th:href="@{/}"><i class="fa fa-fw fa-shopping-basket"></i> Mandje</a>
-        <a th:href="@{/}"><i class="fa fa-fw fa-envelope"></i> Bevestigen</a>
+        <a th:if="${mandje.isGevuld() == true}" th:href="@{/mandje}"><i class="fa fa-fw fa-shopping-basket"></i> Mandje</a>
+        <a th:if="${mandje.isGevuld() == true}" th:href="@{/login}"><i class="fa fa-fw fa-envelope"></i> Bevestigen</a>
 
 </nav>
 
