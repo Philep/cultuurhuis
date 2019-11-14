@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+
+</h1>
+
 <nav th:fragment="menu">
 
         <a class="active" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Voorstellingen</a>
         <a th:if="${mandje.isGevuld() == true}" th:href="@{/mandje}"><i class="fa fa-fw fa-shopping-basket"></i> Mandje</a>
-        <a th:if="${mandje.isGevuld() == true}" th:href="@{/login}"><i class="fa fa-fw fa-envelope"></i> Bevestigen</a>
+        <a th:if="${mandje.isGevuld() == true}" th:href="@{/bevestig}"><i class="fa fa-fw fa-envelope"></i> Bevestigen</a>
 
 </nav>
 

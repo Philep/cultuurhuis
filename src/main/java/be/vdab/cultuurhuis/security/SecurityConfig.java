@@ -10,11 +10,12 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import javax.sql.DataSource;
 
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String USERS_BY_USERNAME =
             "select gebruikersnaam as username, paswoord as password, actief as enabled" +
                     " from klanten where gebruikersnaam = ?";
+
 
     @Bean
     JdbcDaoImpl jdbcDaoImpl(DataSource dataSource) {
@@ -31,13 +32,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/css/**")
                 .mvcMatchers("/js/**");
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .loginPage("/login").defaultSuccessUrl("/")
+                .loginPage("/bevestig").defaultSuccessUrl("/bevestig")
                 .and().authorizeRequests()
-                .mvcMatchers("/**", "/login").permitAll()
+                .mvcMatchers("/", "/bevestig", "/mandje/**", "/voorstellingen/**", "/reserveer/**", "/nieuweklant/**").permitAll()
                 .mvcMatchers("/**").authenticated();
+        http.httpBasic();
     }
 
 }

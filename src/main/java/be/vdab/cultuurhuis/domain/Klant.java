@@ -1,5 +1,7 @@
 package be.vdab.cultuurhuis.domain;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +15,7 @@ public class Klant implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NotBlank
     private String voornaam;
     @NotBlank
@@ -23,18 +25,28 @@ public class Klant implements Serializable {
     private Adres adres;
     @NotBlank
     private String gebruikersnaam;
+    @NotBlank
+    private String geencrypteerdPaswoord;
 
     Klant() {
     }
 
-    public Klant(@NotBlank String voornaam, @NotBlank String familienaam, @Valid Adres adres, @NotBlank String gebruikersnaam) {
+    public Klant(@NotBlank String voornaam, @NotBlank String familienaam, @Valid Adres adres, @NotBlank String gebruikersnaam, @NotBlank String plainWachtwoord) {
         this.voornaam = voornaam;
         this.familienaam = familienaam;
         this.adres = adres;
         this.gebruikersnaam = gebruikersnaam;
+        this.geencrypteerdPaswoord = encryptWachtwoord(plainWachtwoord);
     }
 
-    public long getId() {
+    private String encryptWachtwoord(String plainWachtwoord) {
+        if (plainWachtwoord!= null) {
+            return new BCryptPasswordEncoder().encode(plainWachtwoord);
+        }
+        return null;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -52,6 +64,10 @@ public class Klant implements Serializable {
 
     public String getGebruikersnaam() {
         return gebruikersnaam;
+    }
+
+    public String getGeencrypteerdPaswoord() {
+        return geencrypteerdPaswoord;
     }
 
     @Override

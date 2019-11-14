@@ -13,9 +13,9 @@ public class KlantTest {
 
     @Before
     public void before() {
-        klant1= new Klant("test1", "test1", new Adres(),"test1");
-        klant2= new Klant("test2", "test2", new Adres(),"test2");
-        klant3= new Klant("test3", "test3", new Adres(),"test1");
+        klant1= new Klant("test1", "test1", new Adres(),"test1","test1");
+        klant2= new Klant("test2", "test2", new Adres(),"test2","test2");
+        klant3= new Klant("test3", "test3", new Adres(),"test1","test3");
     }
 
     @Test

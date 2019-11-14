@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments::head(title='Inloggen')"></head>
+<body>
+    <div class="navbar">
+        <nav th:replace="fragments::menu"></nav>
+    </div>
+
+    <h1>Bevestigen<img th:src="@{/images/bevestig.png}" alt="voorstellingen" /> </h1>
+
+    <h2>Stap 1: wie ben je?</h2>
+
+    <form sec:authorize="isAnonymous()" th:action="@{/bevestig}" method="post">
+
+        <dl >
+            <dt>Gebruikersnaam:</dt>
+            <dd><input name="username" required autofocus></dd>
+            <dt>Paswoord:</dt>
+            <dd><input name="password"></dd>
+            <dt><input type="submit" value="Zoek me op"></dt>
+
+
+        </dl>
+        <div th:if="${param.error} != null" class="fout">Verkeerde gebruikersnaam of
+            paswoord</div>
+    </form>
+
+    <form sec:authorize="isAnonymous()" th:action="@{/nieuweklant}" method="post">
+        <dt><input type="submit" value="Ik ben nieuw"></dt>
+    </form>
+
+    <form sec:authorize="isAuthenticated()" th:action="@{/overzicht}" method="post">
+
+        <h4 th:text="|${klant.getVoornaam()} ${klant.getFamilienaam()} ${klant.getAdres().getStraat()} ${klant.getAdres().getHuisnr()} ${klant.getAdres().getPostcode()}  ${klant.getAdres().getGemeente()}|"></h4>
+
+        <h2 >Stap 2: bevestigen</h2>
+
+        <input type="submit" value="Bevestigen">
+
+    </form>
+
+</body>
+</html>
