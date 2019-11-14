@@ -29,7 +29,7 @@
         <dt><input type="submit" value="Ik ben nieuw"></dt>
     </form>
 
-    <form sec:authorize="isAuthenticated()" th:action="@{/overzicht}" method="post">
+    <form sec:authorize="isAuthenticated()" th:action="@{/bevestig/overzicht}" method="post">
 
         <h4 th:text="|${klant.getVoornaam()} ${klant.getFamilienaam()} ${klant.getAdres().getStraat()} ${klant.getAdres().getHuisnr()} ${klant.getAdres().getPostcode()}  ${klant.getAdres().getGemeente()}|"></h4>
 
