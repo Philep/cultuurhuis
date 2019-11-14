@@ -26,7 +26,7 @@ public class Klant implements Serializable {
     @NotBlank
     private String gebruikersnaam;
     @NotBlank
-    private String geencrypteerdPaswoord;
+    private String paswoord;
 
     Klant() {
     }
@@ -36,7 +36,7 @@ public class Klant implements Serializable {
         this.familienaam = familienaam;
         this.adres = adres;
         this.gebruikersnaam = gebruikersnaam;
-        this.geencrypteerdPaswoord = encryptWachtwoord(plainWachtwoord);
+        this.paswoord = encryptWachtwoord(plainWachtwoord);
     }
 
     private String encryptWachtwoord(String plainWachtwoord) {
@@ -66,8 +66,8 @@ public class Klant implements Serializable {
         return gebruikersnaam;
     }
 
-    public String getGeencrypteerdPaswoord() {
-        return geencrypteerdPaswoord;
+    public String getPaswoord() {
+        return paswoord;
     }
 
     @Override

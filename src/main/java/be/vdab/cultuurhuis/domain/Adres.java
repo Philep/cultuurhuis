@@ -43,4 +43,5 @@ public class Adres implements Serializable {
     public String getGemeente() {
         return gemeente;
     }
+
 }

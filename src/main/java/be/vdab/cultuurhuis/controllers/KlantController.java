@@ -2,8 +2,6 @@ package be.vdab.cultuurhuis.controllers;
 
 import be.vdab.cultuurhuis.domain.Adres;
 import be.vdab.cultuurhuis.domain.Klant;
-import be.vdab.cultuurhuis.dto.ReservatieMandje;
-import be.vdab.cultuurhuis.repositories.KlantenRepository;
 import be.vdab.cultuurhuis.services.KlantenService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -43,13 +41,13 @@ public class KlantController {
         ModelAndView modelAndView = new ModelAndView("nieuweklant");
         Klant klant = new Klant(null,null,new Adres(null,null,null,null),null,null);
         modelAndView.addObject("klant", klant);
-
+        System.out.println("test");
         return modelAndView;
 
 
     }
 
-    @PostMapping(value = "nieuweklant", params = "toevoegen")
+    @PostMapping("toevoegen")
     public ModelAndView aanmakenKlant(@Valid Klant klant, Errors errors) {
 
         if (errors.hasErrors()) {
@@ -57,6 +55,7 @@ public class KlantController {
         }
 
         klantenService.create(klant);
+        System.out.println("klant aangemaakt");
 
         return new ModelAndView("bevestig");
 
