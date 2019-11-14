@@ -46,6 +46,7 @@ public class KlantController {
 
         return modelAndView;
 
+
     }
 
     @PostMapping(value = "nieuweklant", params = "toevoegen")
