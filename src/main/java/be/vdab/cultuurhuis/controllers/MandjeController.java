@@ -74,18 +74,5 @@ public class MandjeController {
         return modelAndView.addObject("reserveringenMandje", reserveringenMandje);
     }
 
-    @PostMapping
-    public String toevoegen(@Valid ReservatieForm form, @Valid Mandje mandje, Errors errors) {
-
-
-        if (errors.hasErrors()) {
-            return "redirect:/mandje";
-        }
-
-        mandje.voegToe(form.getId(), form.getAantalPlaatsen());
-
-        return "redirect:/mandje";
-
-    }
 
 }

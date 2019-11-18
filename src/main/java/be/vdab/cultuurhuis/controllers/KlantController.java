@@ -41,7 +41,6 @@ public class KlantController {
         ModelAndView modelAndView = new ModelAndView("nieuweklant");
         Klant klant = new Klant(null,null,new Adres(null,null,null,null),null,null);
         modelAndView.addObject("klant", klant);
-        System.out.println("test");
         return modelAndView;
 
 

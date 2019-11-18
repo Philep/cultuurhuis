@@ -14,7 +14,7 @@
 
     <h1><span th:text="|*{titel} - *{uitvoerders}|"> </span> <img th:src="@{/images/reserveren.png}" alt="reserveren" /> </h1>
 
-    <form method="post" th:action="@{/mandje}">
+    <form method="post" th:action="@{/reserveer}">
 
         <dl>
             <dt>Voorstelling</dt>
@@ -26,9 +26,9 @@
             <dt>Prijs</dt>
             <dd th:text="*{prijs}"></dd>
             <dt>Vrije plaatsen</dt>
-            <dd th:text="*{vrijeplaatsen}"></dd>
+            <dd th:text="*{vrijeplaatsen}" id="vrijeplaatsen"></dd>
             <dt>Plaatsen</dt>
-            <dd><input th:field="${reservatieForm.aantalPlaatsen}" type="number" required min="0"></dd>
+            <dd><input th:field="${reservatieForm.aantalPlaatsen}" type="number" required min="1" th:max="*{vrijeplaatsen}"></dd>
         </dl>
         <input th:field="${reservatieForm.id}" th:value="*{id}" type="hidden">
         <input type="submit" value="Toevoegen">
@@ -36,12 +36,7 @@
 
 </div>
 
-
-
-
-
 <script th:src="@{/js/preventDoubleSubmit.js}"></script>
-
 
 </body>
 </html>
