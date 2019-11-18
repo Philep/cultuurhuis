@@ -30,7 +30,7 @@
     </tr>
     </thead>
     <tbody>
-        <tr th:each="voorstelling:${voorstellingen.content}" th:object="${voorstelling}">
+        <tr th:each="voorstelling:${voorstellingen}" th:object="${voorstelling}">
             <td th:text="*{datum}"></td>
             <td th:text="*{titel}"></td>
             <td th:text="*{uitvoerders}"></td>

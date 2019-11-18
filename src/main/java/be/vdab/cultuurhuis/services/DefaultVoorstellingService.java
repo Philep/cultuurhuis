@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,20 +22,13 @@ public class DefaultVoorstellingService implements VoorstellingService {
         this.voorstellingRepository = voorstellingRepository;
     }
 
-//    @Override
-//    public List<Voorstelling> findByGenreNaam(String genreNaam) {
-//        return voorstellingRepository.findByGenreNaamDatumGreatherThanOrderByDatumDesc(genreNaam, LocalDate.now());
-//    }
-
-
-    @Override
-    public Page<Voorstelling> findById(long id, Pageable pageable) {
-        return voorstellingRepository.findByGenreId(id, pageable);
-    }
-
     @Override
     public Optional<Voorstelling> findById(long id) {
         return voorstellingRepository.findById(id);
     }
 
+    @Override
+    public List<Voorstelling> findByGenreId(long id) {
+        return voorstellingRepository.findByGenreId(id);
+    }
 }

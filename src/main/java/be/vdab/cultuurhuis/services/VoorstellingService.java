@@ -9,8 +9,7 @@ import java.util.Optional;
 
 public interface VoorstellingService {
 
-//    List<Voorstelling> findByGenreNaam(String genreNaam);
-    Page<Voorstelling> findById(long id, Pageable pageable);
+    List<Voorstelling> findByGenreId(long id);
     Optional<Voorstelling> findById(long id);
 
 }
