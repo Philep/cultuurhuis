@@ -31,17 +31,17 @@ public class Klant implements Serializable {
     Klant() {
     }
 
-    public Klant(@NotBlank String voornaam, @NotBlank String familienaam, @Valid Adres adres, @NotBlank String gebruikersnaam, @NotBlank String plainWachtwoord) {
+    public Klant(@NotBlank String voornaam, @NotBlank String familienaam, @Valid Adres adres, @NotBlank String gebruikersnaam, @NotBlank String paswoord) {
         this.voornaam = voornaam;
         this.familienaam = familienaam;
         this.adres = adres;
         this.gebruikersnaam = gebruikersnaam;
-        this.paswoord = encryptWachtwoord(plainWachtwoord);
+        this.paswoord = encryptWachtwoord(paswoord);
     }
 
-    private String encryptWachtwoord(String plainWachtwoord) {
-        if (plainWachtwoord!= null) {
-            return new BCryptPasswordEncoder().encode(plainWachtwoord);
+    private String encryptWachtwoord(String paswoord) {
+        if (paswoord!= null) {
+            return "{bcrypt}" + new BCryptPasswordEncoder().encode(paswoord);
         }
         return null;
     }
@@ -68,6 +68,10 @@ public class Klant implements Serializable {
 
     public String getPaswoord() {
         return paswoord;
+    }
+
+    public void setAdres(Adres adres) {
+        this.adres = adres;
     }
 
     @Override

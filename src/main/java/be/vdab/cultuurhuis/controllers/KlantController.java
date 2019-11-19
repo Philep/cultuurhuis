@@ -53,6 +53,8 @@ public class KlantController {
             return new ModelAndView("nieuweklant");
         }
 
+        System.out.println(klant.toString());
+
         klantenService.create(klant);
         System.out.println("klant aangemaakt");
 

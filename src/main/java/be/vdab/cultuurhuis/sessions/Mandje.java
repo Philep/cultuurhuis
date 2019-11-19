@@ -3,11 +3,14 @@ package be.vdab.cultuurhuis.sessions;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Component
 @SessionScope
-public class Mandje {
+public class Mandje implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final Map<Long, Integer> reserveringen;
 

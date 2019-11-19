@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +73,17 @@ public class MandjeController {
 
         modelAndView.addObject("totalePrijs", totalePrijs);
         return modelAndView.addObject("reserveringenMandje", reserveringenMandje);
+    }
+
+    @PostMapping()
+    public String verwijderen(long[] ids, @Valid Mandje mandje) {
+
+        if (ids != null) {
+            Arrays.stream(ids).forEach(id -> mandje.remove(id));
+        }
+
+        return "redirect:/mandje";
+
     }
 
 

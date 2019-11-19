@@ -48,7 +48,7 @@ class BevestigController {
     }
 
     @PostMapping("overzicht")
-    public ModelAndView overzicht(@Valid Mandje mandje, @Valid Klant klant) {
+    public ModelAndView overzicht(@Valid Mandje mandje, Principal principal) {
 
         ModelAndView modelAndView = new ModelAndView("overzicht");
         try {
@@ -57,9 +57,12 @@ class BevestigController {
 
             for (Map.Entry<Long, Integer> entry : map.entrySet()) {
 
-                Reservatie reservatie = new Reservatie(klant, voorstellingService.findById(entry.getKey()).get(),entry.getValue());
+                Klant klant = klantenService.findByGebruikersnaam(principal.getName());
 
+                Reservatie reservatie = new Reservatie(klant, voorstellingService.findById(entry.getKey()).get(),entry.getValue());
+                souts
             }
+
 
         } catch (VoorstellingNietGevondenException e) {
             e.printStackTrace();

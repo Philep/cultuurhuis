@@ -1,7 +1,9 @@
 package be.vdab.cultuurhuis.controllers;
 
 import be.vdab.cultuurhuis.domain.Voorstelling;
+import be.vdab.cultuurhuis.exceptions.VoorstellingNietGevondenException;
 import be.vdab.cultuurhuis.forms.ReservatieForm;
+import be.vdab.cultuurhuis.services.VoorstellingService;
 import be.vdab.cultuurhuis.sessions.Mandje;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -18,8 +20,11 @@ import java.util.Optional;
 @RequestMapping("reserveer")
 class ReserveerController {
 
+    private final VoorstellingService voorstellingService;
 
-
+    public ReserveerController(VoorstellingService voorstellingService) {
+        this.voorstellingService = voorstellingService;
+    }
 
     @GetMapping("{optionalVoorstelling}")
     public ModelAndView reserveer(@PathVariable Optional<Voorstelling> optionalVoorstelling) {
@@ -38,7 +43,20 @@ class ReserveerController {
             return "redirect:/mandje";
         }
 
-        mandje.voegToe(form.getId(), form.getAantalPlaatsen());
+        try {
+
+            Voorstelling voorstelling = voorstellingService.findById(form.getId()).get();
+
+            if (voorstelling.getVrijeplaatsen() >= form.getAantalPlaatsen()) {
+                mandje.voegToe(form.getId(), form.getAantalPlaatsen());
+            }
+
+
+        } catch (VoorstellingNietGevondenException e) {
+            e.printStackTrace();
+        }
+
+
 
         return "redirect:/mandje";
 

@@ -44,4 +44,19 @@ public class Adres implements Serializable {
         return gemeente;
     }
 
+    public void setStraat(String straat) {
+        this.straat = straat;
+    }
+
+    public void setHuisnr(String huisnr) {
+        this.huisnr = huisnr;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public void setGemeente(String gemeente) {
+        this.gemeente = gemeente;
+    }
 }

@@ -22,6 +22,7 @@ public class DefaultKlantenService implements KlantenService{
     }
 
     @Override
+    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
     public void create(Klant klant) {
         klantenRepository.save(klant);
     }

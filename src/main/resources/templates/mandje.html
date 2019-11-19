@@ -8,29 +8,31 @@
 
 <h1>Mandje <img th:src="@{/images/mandje.png}" alt="mandje" /> </h1>
 
-<table th:if="${mandje}">
-    <thead>
-    <tr>
-        <th>Datum</a></th>
-        <th>Titel</a></th>
-        <th>Uitvoerders</a></th>
-        <th>Prijs</a></th>
-        <th>Plaatsen</a></th>
-        <th><input type="submit" value="Verwijderen"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="reservering:${reserveringenMandje}" th:object="${reservering}">
-        <td th:text="*{datum}"></td>
-        <td th:text="*{titel}"></td>
-        <td th:text="*{uitvoerders}"></td>
-        <td th:text="*{prijs}"></td>
-        <td th:text="*{aantalPlaatsen}"></td>
-        <td> <input type="checkbox"> </td>
+<form method="post" th:action="@{/mandje}">
+    <table th:if="${mandje}">
+        <thead>
+        <tr>
+            <th>Datum</a></th>
+            <th>Titel</a></th>
+            <th>Uitvoerders</a></th>
+            <th>Prijs</a></th>
+            <th>Plaatsen</a></th>
+            <th><input type="submit" value="Verwijderen"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reservering:${reserveringenMandje}" th:object="${reservering}">
+            <td th:text="*{datum}"></td>
+            <td th:text="*{titel}"></td>
+            <td th:text="*{uitvoerders}"></td>
+            <td th:text="*{prijs}"></td>
+            <td th:text="*{aantalPlaatsen}"></td>
+            <td> <input type="checkbox" name="ids" th:value="*{id}"> </td>
 
-    </tr>
-    </tbody>
-</table>
+        </tr>
+        </tbody>
+    </table>
+</form>
 
 <h3 th:text="|Te betalen: € ${totalePrijs}|"></h3>
 
